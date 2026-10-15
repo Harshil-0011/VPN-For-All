@@ -1,0 +1,20 @@
+{
+  "routing_policy": "strict_isolation",
+  "doh": {
+    "enabled": true,
+    "primary_resolver": "https://1.1.1.1/dns-query",
+    "secondary_resolver": "https://dns.quad9.net/dns-query",
+    "listen_address": "127.0.0.1",
+    "listen_port": 5053
+  },
+  "killswitch": {
+    "enabled_by_default": true,
+    "allowed_interfaces": ["wg0", "tun0", "lo"],
+    "block_ipv6_if_unhandled": true
+  },
+  "session": {
+    "ephemeral_profiles": true,
+    "purge_on_exit": true,
+    "zero_log": true
+  }
+}

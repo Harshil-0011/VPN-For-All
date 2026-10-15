@@ -1,0 +1,20 @@
+# Quad9 DNS-over-HTTPS (DoH) Local Forwarder Configuration
+# Listens locally on 127.0.0.1:5053 and forwards queries via DoH to Quad9 Secure Privacy Resolver.
+# Features automatic malware blocking and zero-logging privacy guarantees.
+
+proxy-dns: true
+proxy-dns-port: 5053
+proxy-dns-address: 127.0.0.1
+
+upstream:
+  - https://dns.quad9.net/dns-query
+  - https://dns11.quad9.net/dns-query
+
+fallback:
+  - https://1.1.1.1/dns-query
+
+# Disable local logging & diagnostic exports
+no-autoupdate: true
+metrics: 127.0.0.1:0
+loglevel: fatal
+logfile: /dev/null
