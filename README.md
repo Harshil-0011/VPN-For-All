@@ -13,6 +13,12 @@
 
 ---
 
+### 🖥️ Interactive Web & Desktop Control Dashboard
+
+![VPN-For-All Dashboard](docs/app_dashboard.png)
+
+---
+
 ### ⬇️ [Download Latest Release (.exe / Binary)](https://github.com/your-username/VPN-For-All/releases/latest)
 
 </div>
@@ -106,7 +112,8 @@ python3 verify_privacy.py
 │   ├── server.py                 # MCP (Model Context Protocol) JSON-RPC stdio server
 │   └── client_test.py            # Local agent harness test script
 ├── docs/                         # Architecture documentation
-│   └── ARCHITECTURE.md           # Visual architecture diagrams and design details
+│   ├── ARCHITECTURE.md           # Visual architecture diagrams and design details
+│   └── app_dashboard.png         # Web UI Control Panel Screenshot
 ├── tests/                        # Unit test suite
 │   ├── test_core.py              # Core engine tests
 │   ├── test_mcp.py               # MCP server tool tests
