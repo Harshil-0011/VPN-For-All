@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
     initNavigation();
     fetchSystemStatus();
 
-    // Refresh every 5 seconds for live status
+    // Auto-refresh status every 5s
     setInterval(fetchSystemStatus, 5000);
 
-    // Event Listeners
+    // Event listeners
     document.getElementById("refresh-btn").addEventListener("click", fetchSystemStatus);
     document.getElementById("toggle-killswitch-btn").addEventListener("click", toggleKillswitch);
     document.getElementById("fw-enable-btn").addEventListener("click", () => setKillswitch(true));
@@ -17,29 +17,28 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initNavigation() {
-    const navItems = document.querySelectorAll(".nav-item");
-    navItems.forEach(item => {
-        item.addEventListener("click", () => {
-            const tab = item.getAttribute("data-tab");
-            switchTab(tab);
+    const tabs = document.querySelectorAll(".tab-btn");
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            const target = tab.getAttribute("data-tab");
+            switchTab(target);
         });
     });
 }
 
 function switchTab(tabName) {
-    const navItems = document.querySelectorAll(".nav-item");
-    const tabContents = document.querySelectorAll(".tab-content");
+    const tabs = document.querySelectorAll(".tab-btn");
+    const contents = document.querySelectorAll(".tab-content");
 
-    navItems.forEach(n => {
-        if (n.getAttribute("data-tab") === tabName) {
-            n.classList.add("active");
-            document.getElementById("page-title").textContent = n.textContent.trim();
+    tabs.forEach(t => {
+        if (t.getAttribute("data-tab") === tabName) {
+            t.classList.add("active");
         } else {
-            n.classList.remove("active");
+            t.classList.remove("active");
         }
     });
 
-    tabContents.forEach(c => {
+    contents.forEach(c => {
         if (c.id === `tab-${tabName}`) {
             c.classList.add("active");
         } else {
@@ -119,7 +118,7 @@ function updateSessionsUI(sessions) {
     if (!listEl) return;
 
     if (!sessions || sessions.length === 0) {
-        listEl.innerHTML = '<li class="empty-msg" style="color: var(--text-muted); font-size: 13px;">No active ephemeral profiles.</li>';
+        listEl.innerHTML = '<li class="empty-msg" style="color: var(--text-secondary); font-size: 13px;">No active ephemeral profiles.</li>';
         return;
     }
 
@@ -127,9 +126,9 @@ function updateSessionsUI(sessions) {
         <li>
             <div>
                 <strong>${sess.session_id}</strong>
-                <div style="font-size: 11px; color: var(--text-muted);">${sess.isolation_level || 'strict_container'}</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">${sess.isolation_level || 'strict_container'}</div>
             </div>
-            <button class="btn btn-danger btn-sm" onclick="wipeSession('${sess.session_id}')">Wipe</button>
+            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 11px;" onclick="wipeSession('${sess.session_id}')">Wipe</button>
         </li>
     `).join("");
 }
