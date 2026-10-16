@@ -1,0 +1,46 @@
+{
+  "policies": {
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    "DisableFirefoxAccounts": true,
+    "DisableFeedbackCommands": true,
+    "OverrideFirstRunPage": "",
+    "OverridePostUpdatePage": "",
+    "DontCheckDefaultBrowser": true,
+    "DisplayBookmarksToolbar": "never",
+    "DisplayMenuBar": "never",
+    "SearchBar": "unified",
+    "ExtensionSettings": {
+      "*": {
+        "blocked_install_message": "Extensions restricted in isolated browser mode for anti-fingerprinting enforcement.",
+        "installation_mode": "blocked"
+      }
+    },
+    "Preferences": {
+      "privacy.firstparty.isolate": true,
+      "privacy.resistFingerprinting": true,
+      "privacy.trackingprotection.enabled": true,
+      "privacy.trackingprotection.fingerprinting.enabled": true,
+      "privacy.trackingprotection.cryptomining.enabled": true,
+      "media.peerconnection.enabled": false,
+      "media.navigator.enabled": false,
+      "webgl.disabled": true,
+      "network.dns.disableIPv6": false,
+      "network.trr.mode": 3,
+      "network.trr.uri": "https://1.1.1.1/dns-query",
+      "privacy.sanitize.sanitizeOnShutdown": true,
+      "privacy.clearOnShutdown.cache": true,
+      "privacy.clearOnShutdown.cookies": true,
+      "privacy.clearOnShutdown.downloads": true,
+      "privacy.clearOnShutdown.formdata": true,
+      "privacy.clearOnShutdown.history": true,
+      "privacy.clearOnShutdown.offlineApps": true,
+      "privacy.clearOnShutdown.sessions": true,
+      "privacy.clearOnShutdown.siteSettings": true,
+      "browser.cache.disk.enable": false,
+      "browser.cache.memory.enable": false,
+      "browser.privatebrowsing.autostart": true
+    }
+  }
+}

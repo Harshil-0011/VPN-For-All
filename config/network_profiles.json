@@ -1,0 +1,18 @@
+{
+  "profiles": [
+    {
+      "name": "strict-privacy",
+      "doh": "quad9",
+      "killswitch": true,
+      "browser_hardening": "strict",
+      "wg_interface": "wg0"
+    },
+    {
+      "name": "developer-isolated",
+      "doh": "cloudflare",
+      "killswitch": false,
+      "browser_hardening": "moderate",
+      "wg_interface": "wg0"
+    }
+  ]
+}
