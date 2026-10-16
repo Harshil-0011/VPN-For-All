@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initNavigation();
     fetchSystemStatus();
 
+    // Refresh every 5 seconds for live status
+    setInterval(fetchSystemStatus, 5000);
+
     // Event Listeners
     document.getElementById("refresh-btn").addEventListener("click", fetchSystemStatus);
     document.getElementById("toggle-killswitch-btn").addEventListener("click", toggleKillswitch);
@@ -10,24 +13,38 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("quick-launch-btn").addEventListener("click", createSession);
     document.getElementById("create-session-btn").addEventListener("click", createSession);
     document.getElementById("wipe-all-btn").addEventListener("click", wipeAllSessions);
+    document.getElementById("manage-tunnel-btn").addEventListener("click", () => switchTab("tunnels"));
 });
 
 function initNavigation() {
     const navItems = document.querySelectorAll(".nav-item");
-    const tabContents = document.querySelectorAll(".tab-content");
-
     navItems.forEach(item => {
         item.addEventListener("click", () => {
             const tab = item.getAttribute("data-tab");
-
-            navItems.forEach(n => n.classList.remove("active"));
-            tabContents.forEach(c => c.classList.remove("active"));
-
-            item.classList.add("active");
-            document.getElementById(`tab-${tab}`).classList.add("active");
-
-            document.getElementById("page-title").textContent = item.textContent.trim();
+            switchTab(tab);
         });
+    });
+}
+
+function switchTab(tabName) {
+    const navItems = document.querySelectorAll(".nav-item");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    navItems.forEach(n => {
+        if (n.getAttribute("data-tab") === tabName) {
+            n.classList.add("active");
+            document.getElementById("page-title").textContent = n.textContent.trim();
+        } else {
+            n.classList.remove("active");
+        }
+    });
+
+    tabContents.forEach(c => {
+        if (c.id === `tab-${tabName}`) {
+            c.classList.add("active");
+        } else {
+            c.classList.remove("active");
+        }
     });
 }
 
@@ -47,28 +64,28 @@ async function fetchSystemStatus() {
 }
 
 function updateFirewallUI(firewall) {
-    const badge = document.getElementById("killswitch-badge");
+    const pill = document.getElementById("killswitch-pill");
     const fwText = document.getElementById("fw-state-text");
     const isActive = firewall && firewall.killswitch_active;
 
-    if (badge) {
-        badge.textContent = isActive ? "ACTIVE (PROTECTED)" : "INACTIVE";
-        badge.className = isActive ? "status-badge active" : "status-badge inactive";
+    if (pill) {
+        pill.textContent = isActive ? "ACTIVE (PROTECTED)" : "INACTIVE";
+        pill.className = isActive ? "status-pill active" : "status-pill inactive";
     }
     if (fwText) {
-        fwText.textContent = isActive ? "ACTIVE - Unencrypted traffic blocked" : "INACTIVE - Traffic permitted";
-        fwText.className = isActive ? "status-text text-success" : "status-text text-danger";
+        fwText.textContent = isActive ? "ACTIVE - Unencrypted traffic blocked" : "INACTIVE - Direct traffic allowed";
+        fwText.className = isActive ? "status-pill active" : "status-pill inactive";
     }
 }
 
 function updateTunnelUI(tunnel) {
-    const badge = document.getElementById("tunnel-badge");
+    const pill = document.getElementById("tunnel-pill");
     const details = document.getElementById("tunnel-details");
     const isActive = tunnel && tunnel.active;
 
-    if (badge) {
-        badge.textContent = isActive ? "CONNECTED" : "INACTIVE";
-        badge.className = isActive ? "status-badge active" : "status-badge inactive";
+    if (pill) {
+        pill.textContent = isActive ? "CONNECTED" : "INACTIVE";
+        pill.className = isActive ? "status-pill active" : "status-pill inactive";
     }
     if (details) {
         details.textContent = isActive ? `Interface: ${tunnel.interface} | Connected` : "No active WireGuard interface detected.";
@@ -89,7 +106,7 @@ function updateInterfacesUI(interfaces) {
             <td><strong>${iface.name}</strong></td>
             <td>${iface.type}</td>
             <td>${iface.addresses ? iface.addresses.join(", ") : "None"}</td>
-            <td><span class="status-badge ${iface.state === "up" ? "active" : "inactive"}">${iface.state}</span></td>
+            <td><span class="status-pill ${iface.state === "up" ? "active" : "inactive"}">${iface.state}</span></td>
         </tr>
     `).join("");
 }
@@ -102,7 +119,7 @@ function updateSessionsUI(sessions) {
     if (!listEl) return;
 
     if (!sessions || sessions.length === 0) {
-        listEl.innerHTML = '<li class="empty-msg">No active ephemeral profiles.</li>';
+        listEl.innerHTML = '<li class="empty-msg" style="color: var(--text-muted); font-size: 13px;">No active ephemeral profiles.</li>';
         return;
     }
 
@@ -110,7 +127,7 @@ function updateSessionsUI(sessions) {
         <li>
             <div>
                 <strong>${sess.session_id}</strong>
-                <div style="font-size: 11px; color: var(--text-secondary);">${sess.isolation_level || 'strict_container'}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">${sess.isolation_level || 'strict_container'}</div>
             </div>
             <button class="btn btn-danger btn-sm" onclick="wipeSession('${sess.session_id}')">Wipe</button>
         </li>
@@ -118,8 +135,8 @@ function updateSessionsUI(sessions) {
 }
 
 async function toggleKillswitch() {
-    const badge = document.getElementById("killswitch-badge");
-    const currentState = badge && badge.classList.contains("active");
+    const pill = document.getElementById("killswitch-pill");
+    const currentState = pill && pill.classList.contains("active");
     setKillswitch(!currentState);
 }
 
@@ -131,7 +148,7 @@ async function setKillswitch(enable) {
             body: JSON.stringify({ enable, interface: "wg0" })
         });
         const data = await resp.json();
-        alert(data.message || "Firewall updated");
+        alert(data.message || "Firewall status updated");
         fetchSystemStatus();
     } catch (err) {
         alert("Failed to toggle firewall killswitch: " + err);

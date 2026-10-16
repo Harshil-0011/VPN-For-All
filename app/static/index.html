@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPN For All - Local Privacy Control Panel</title>
+    <title>VPN For All - Professional Privacy Control Center</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
 </head>
 <body>
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="brand">
-                <div class="logo-icon">🛡️</div>
-                <div class="brand-text">
+                <div class="logo-shield">🛡️</div>
+                <div class="brand-info">
                     <h2>VPN-For-All</h2>
                     <span>Local-First Control</span>
                 </div>
@@ -22,25 +22,25 @@
 
             <nav class="nav-menu">
                 <button class="nav-item active" data-tab="overview">
-                    <span class="icon">📊</span> Overview
+                    <span>📊</span> Overview
                 </button>
                 <button class="nav-item" data-tab="firewall">
-                    <span class="icon">🧱</span> Firewall Killswitch
+                    <span>🧱</span> Firewall Killswitch
                 </button>
                 <button class="nav-item" data-tab="sessions">
-                    <span class="icon">🔒</span> Ephemeral Profiles
+                    <span>🔒</span> Ephemeral Profiles
                 </button>
                 <button class="nav-item" data-tab="tunnels">
-                    <span class="icon">🚀</span> Tunnels & Routing
+                    <span>🚀</span> Tunnels & Routing
                 </button>
                 <button class="nav-item" data-tab="mcp">
-                    <span class="icon">🤖</span> Agent / MCP Channel
+                    <span>🤖</span> Agent / MCP Channel
                 </button>
             </nav>
 
             <div class="sidebar-footer">
-                <div class="zero-log-badge">
-                    <span class="pulse-dot"></span> Zero-Log Active
+                <div class="zero-log-banner">
+                    <span class="pulse-dot"></span> Zero-Log System Active
                 </div>
             </div>
         </aside>
@@ -50,7 +50,7 @@
             <header class="top-header">
                 <div class="header-title">
                     <h1 id="page-title">Privacy Overview</h1>
-                    <p id="page-subtitle">Local system IP isolation and routing state</p>
+                    <p id="page-subtitle">Real-time local network interface, firewall killswitch, and session isolation status</p>
                 </div>
                 <div class="header-actions">
                     <button id="refresh-btn" class="btn btn-secondary">🔄 Refresh</button>
@@ -60,52 +60,44 @@
             <!-- Tab Content: Overview -->
             <section id="tab-overview" class="tab-content active">
                 <div class="grid-cards">
-                    <div class="card status-card">
-                        <h3>Firewall Killswitch</h3>
-                        <div class="status-indicator" id="killswitch-indicator">
-                            <span class="status-badge" id="killswitch-badge">Checking...</span>
-                        </div>
-                        <p class="card-desc">Blocks unencrypted outbound traffic if VPN disconnects.</p>
-                        <button id="toggle-killswitch-btn" class="btn btn-primary mt-10">Toggle Killswitch</button>
+                    <div class="card">
+                        <h3>🧱 Firewall Killswitch</h3>
+                        <div class="status-pill inactive" id="killswitch-pill">Checking...</div>
+                        <p class="card-desc">Blocks unencrypted outbound traffic if the VPN drops.</p>
+                        <button id="toggle-killswitch-btn" class="btn btn-primary mt-15">Toggle Killswitch</button>
                     </div>
 
-                    <div class="card status-card">
-                        <h3>WireGuard Tunnel</h3>
-                        <div class="status-indicator">
-                            <span class="status-badge inactive" id="tunnel-badge">Inactive</span>
-                        </div>
+                    <div class="card">
+                        <h3>🚀 WireGuard Tunnel</h3>
+                        <div class="status-pill inactive" id="tunnel-pill">Inactive</div>
                         <p class="card-desc" id="tunnel-details">Interface wg0 ready for local routing.</p>
-                        <button id="manage-tunnel-btn" class="btn btn-secondary mt-10">Manage Tunnels</button>
+                        <button id="manage-tunnel-btn" class="btn btn-secondary mt-15">Manage Tunnels</button>
                     </div>
 
-                    <div class="card status-card">
-                        <h3>DNS Security (DoH)</h3>
-                        <div class="status-indicator">
-                            <span class="status-badge active">Strict (TRR 3)</span>
-                        </div>
-                        <p class="card-desc">Local DoH forwarder active on 127.0.0.1:5053.</p>
+                    <div class="card">
+                        <h3>🌐 DNS Security (DoH)</h3>
+                        <div class="status-pill active">Strict (TRR Mode 3)</div>
+                        <p class="card-desc">Local DoH proxy active on 127.0.0.1:5053.</p>
                     </div>
 
-                    <div class="card status-card">
-                        <h3>Ephemeral Profiles</h3>
-                        <div class="status-indicator">
-                            <span class="value-large" id="session-count">0</span> Active
-                        </div>
-                        <p class="card-desc">Containerized profiles auto-purged on exit.</p>
-                        <button id="quick-launch-btn" class="btn btn-primary mt-10">🚀 Launch Private Session</button>
+                    <div class="card">
+                        <h3>🔒 Ephemeral Profiles</h3>
+                        <div class="value-highlight" id="session-count">0</div>
+                        <p class="card-desc">Containerized profiles auto-wiped on exit.</p>
+                        <button id="quick-launch-btn" class="btn btn-primary mt-15">🚀 Launch Private Session</button>
                     </div>
                 </div>
 
-                <div class="card mt-20">
-                    <h3>Local Network Interfaces</h3>
-                    <div class="table-container mt-10">
+                <div class="card table-card">
+                    <h3>Network Interfaces</h3>
+                    <div class="table-container">
                         <table class="data-table">
                             <thead>
                                 <tr>
                                     <th>Interface Name</th>
                                     <th>Type</th>
                                     <th>IP Addresses</th>
-                                    <th>State</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody id="interfaces-tbody">
@@ -119,14 +111,11 @@
             <!-- Tab Content: Firewall -->
             <section id="tab-firewall" class="tab-content">
                 <div class="card">
-                    <h3>System Firewall Killswitch Control</h3>
-                    <p>Enforce zero-leak network isolation directly via OS firewall rules (iptables on Linux, netsh on Windows).</p>
-                    <div class="control-box mt-15">
-                        <div class="status-row">
-                            <strong>Current State:</strong>
-                            <span id="fw-state-text" class="status-text">Inactive</span>
-                        </div>
-                        <div class="btn-group mt-15">
+                    <h3>System Firewall Killswitch</h3>
+                    <p class="card-desc">Enforce zero-leak network isolation directly via system firewall rules (iptables/nftables on Linux, netsh on Windows).</p>
+                    <div class="mt-20">
+                        <p><strong>Current Status:</strong> <span id="fw-state-text" class="status-pill inactive">Inactive</span></p>
+                        <div class="flex-gap mt-15">
                             <button id="fw-enable-btn" class="btn btn-success">Enable Killswitch</button>
                             <button id="fw-disable-btn" class="btn btn-danger">Disable Killswitch</button>
                         </div>
@@ -137,17 +126,17 @@
             <!-- Tab Content: Sessions -->
             <section id="tab-sessions" class="tab-content">
                 <div class="card">
-                    <h3>Ephemeral Session Containerization</h3>
-                    <p>Create temporary hardened browser profiles that leave zero footprint on disk after shutdown.</p>
-                    <div class="btn-group mt-15">
-                        <button id="create-session-btn" class="btn btn-primary">+ Create Ephemeral Profile</button>
-                        <button id="wipe-all-btn" class="btn btn-danger">🔥 Wipe All Profiles</button>
+                    <h3>Ephemeral Session Profiles</h3>
+                    <p class="card-desc">Create isolated browser containers that leave zero persistent footprint on disk after closure.</p>
+                    <div class="flex-gap mt-15">
+                        <button id="create-session-btn" class="btn btn-primary">+ Create Profile</button>
+                        <button id="wipe-all-btn" class="btn btn-danger">🔥 Purge All Profiles</button>
                     </div>
 
                     <div class="mt-20">
                         <h4>Active Profiles</h4>
                         <ul id="sessions-list" class="sessions-list mt-10">
-                            <li class="empty-msg">No active ephemeral sessions.</li>
+                            <li class="empty-msg">No active ephemeral profiles.</li>
                         </ul>
                     </div>
                 </div>
@@ -156,15 +145,15 @@
             <!-- Tab Content: Tunnels -->
             <section id="tab-tunnels" class="tab-content">
                 <div class="card">
-                    <h3>Local WireGuard & Routing Control</h3>
-                    <p>Manage VPN configuration files and routing rules locally without cloud dependencies.</p>
-                    <div class="form-group mt-15">
-                        <label for="wg-config-input">WireGuard Configuration File Path:</label>
+                    <h3>WireGuard Tunnel & Routing Rules</h3>
+                    <p class="card-desc">Manage local VPN configurations and routing tables completely locally without cloud dependencies.</p>
+                    <div class="mt-15">
+                        <label for="wg-config-input" style="font-size: 13px; font-weight: 600;">Configuration File Path:</label>
                         <input type="text" id="wg-config-input" class="form-control" placeholder="/etc/wireguard/wg0.conf">
-                    </div>
-                    <div class="btn-group mt-10">
-                        <button id="start-tunnel-btn" class="btn btn-success">Start Tunnel</button>
-                        <button id="stop-tunnel-btn" class="btn btn-danger">Stop Tunnel</button>
+                        <div class="flex-gap mt-15">
+                            <button id="start-tunnel-btn" class="btn btn-success">Start Tunnel</button>
+                            <button id="stop-tunnel-btn" class="btn btn-danger">Stop Tunnel</button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -173,9 +162,9 @@
             <section id="tab-mcp" class="tab-content">
                 <div class="card">
                     <h3>Model Context Protocol (MCP) Agent Channel</h3>
-                    <p>AI coding agents (like Jules) connect locally over standard stdio JSON-RPC 2.0 to drive and inspect privacy routing programmatically.</p>
-                    <div class="mcp-info mt-15">
-                        <p><strong>Server Executable:</strong> <code>python3 mcp/server.py</code></p>
+                    <p class="card-desc">AI agents connect locally over standard stdio JSON-RPC 2.0 to inspect and drive privacy routing programmatically.</p>
+                    <div class="mt-15" style="font-size: 13px;">
+                        <p style="margin-bottom: 8px;"><strong>Server Command:</strong> <code style="background: rgba(0,0,0,0.4); padding: 4px 8px; border-radius: 4px;">python3 mcp/server.py</code></p>
                         <p><strong>Exposed Tools:</strong> <code>get_routing_status</code>, <code>toggle_killswitch</code>, <code>get_dns_security</code>, <code>manage_session</code>, <code>inspect_tunnels</code></p>
                     </div>
                 </div>
